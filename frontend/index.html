@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DevelopersHub - Premium Full-Stack Agency & Software House</title>
+  <meta name="description" content="DevelopersHub is a premium full-stack agency specializing in fast, secure, and beautiful web applications. From ideation to deployment, we build digital products that scale.">
+  <meta name="keywords" content="full-stack agency, web development, flask, postgresql, software house, premium design, SaaS development">
+  <meta name="author" content="DevelopersHub">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://developershub.com/">
+  <meta property="og:title" content="DevelopersHub - Premium Full-Stack Agency">
+  <meta property="og:description" content="We build digital products that actually scale. Premium web development services.">
+  <meta property="og:image" content="https://developershub.com/assets/og-image.png">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:title" content="DevelopersHub - Premium Full-Stack Agency">
+  <meta property="twitter:description" content="We build digital products that actually scale. Premium web development services.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div style="
+    position:fixed; inset:0; pointer-events:none; z-index:0;
+    background-image: repeating-linear-gradient(
+      0deg, transparent, transparent 60px,
+      rgba(255,255,255,0.04) 60px, rgba(255,255,255,0.04) 61px),
+    repeating-linear-gradient(
+      90deg, transparent, transparent 60px,
+      rgba(255,255,255,0.04) 60px, rgba(255,255,255,0.04) 61px);
+  "></div>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="container nav-inner">
+      <a href="index.html" class="logo">Developers<span>Hub</span></a>
+      <ul class="nav-links">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="pages/about.html">About</a></li>
+        <li><a href="pages/services.html">Services</a></li>
+        <li><a href="pages/portfolio.html">Portfolio</a></li>
+        <li><a href="pages/blog.html">Blog</a></li>
+        <li><a href="pages/contact.html">Contact</a></li>
+        <li><a href="pages/booking.html" class="nav-cta">Book a Meeting</a></li>
+      </ul>
+      <button class="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container" id="hero-layout" style="display:flex; align-items:center; min-height:100vh; padding-top:90px; position:relative; z-index:1;">
+      <!-- Left Column -->
+      <div style="flex: 0 0 55%; padding-right:2rem; display:flex; flex-direction:column; justify-content:center;">
+        <div data-aos="fade-down" style="
+          display:inline-flex; align-items:center; gap:8px;
+          background:rgba(255,255,255,0.2); backdrop-filter:blur(10px);
+          border:1px solid rgba(255,255,255,0.35); border-radius:50px;
+          padding:8px 18px; font-size:13px; font-weight:500; color:white;
+          margin-bottom:28px; width:max-content;
+        ">
+          ✦ Now Live — Full Stack Agency &nbsp; ›
+        </div>
+        
+        <h1 data-aos="fade-up" data-aos-delay="100" style="font-size:clamp(2.8rem, 5.5vw, 4.2rem); line-height:1.1;">
+          <span style="font-family:'Inter';font-weight:800;color:white;display:block">
+            We Build Digital
+          </span>
+          <span style="font-family:'Inter';font-weight:800;color:white;display:block">
+            Products That
+          </span>
+          <span style="font-family:'Playfair Display';font-style:italic; font-weight:400;color:rgba(255,255,255,0.85);display:block">
+            actually scale.
+          </span>
+        </h1>
+        
+        <p data-aos="fade-up" data-aos-delay="200" style="
+          font-size:1.1rem; color:rgba(255,255,255,0.75);
+          max-width:480px; line-height:1.75; margin:24px 0 36px;
+        ">
+          From idea to deployment — we craft fast, secure and beautiful
+          web applications using Flask, PostgreSQL and modern frontend tech.
+        </p>
+        
+        <div class="hero-actions" data-aos="fade-up" data-aos-delay="300" style="display:flex; gap:16px; margin-bottom:40px; justify-content:flex-start;">
+          <a href="pages/portfolio.html" style="
+            background:white; color:#0f2d1a; border:none;
+            border-radius:50px; padding:14px 32px;
+            font-weight:700; font-size:15px; cursor:pointer; 
+            transition:all 0.25s; box-shadow:0 8px 30px rgba(0,0,0,0.15); display:inline-block;
+          " onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">View Our Work</a>
+          <a href="pages/booking.html" style="
+            background:transparent; border:2px solid rgba(255,255,255,0.65);
+            color:white; border-radius:50px; padding:14px 32px; 
+            font-weight:600; font-size:15px; cursor:pointer; 
+            transition:all 0.25s; display:inline-block;
+          " onmouseover="this.style.background='rgba(255,255,255,0.12)';this.style.transform='translateY(-2px)'" onmouseout="this.style.background='transparent';this.style.transform='none'">Book a Meeting  ›</a>
+        </div>
+        
+        <div class="hero-stats" data-aos="fade-up" data-aos-delay="400" style="
+          display:flex; gap:32px; padding-top:32px; border-top:1px solid rgba(255,255,255,0.2); justify-content:flex-start;
+        ">
+          <div><h3 style="font-size:28px; font-weight:800; color:white;">50+</h3><p style="font-size:13px; color:rgba(255,255,255,0.65);">Projects</p></div>
+          <div style="border-left:1px solid rgba(255,255,255,0.2); height:36px; align-self:center;"></div>
+          <div><h3 style="font-size:28px; font-weight:800; color:white;">30+</h3><p style="font-size:13px; color:rgba(255,255,255,0.65);">Clients</p></div>
+          <div style="border-left:1px solid rgba(255,255,255,0.2); height:36px; align-self:center;"></div>
+          <div><h3 style="font-size:28px; font-weight:800; color:white;">5★</h3><p style="font-size:13px; color:rgba(255,255,255,0.65);">Rating</p></div>
+        </div>
+      </div>
+      
+      <!-- Right Column -->
+      <div style="flex: 0 0 45%; position:relative; width:100%;">
+        <div id="hero-card" style="
+          background: rgba(255,255,255,0.62); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+          border: 1px solid rgba(255,255,255,0.55); border-radius: 24px; padding: 28px;
+          box-shadow: 0 30px 80px rgba(0,0,0,0.15), 0 0 0 1px rgba(255,255,255,0.3) inset;
+          transform: perspective(1000px) rotateY(-14deg) rotateX(6deg); transform-style: preserve-3d; will-change: transform;
+          max-width: 420px; margin: 0 auto;
+        ">
+          <!-- Inner mockup -->
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; transform:translateZ(10px);">
+             <h4 style="color:#0f1f0f; margin:0;">November</h4>
+             <div style="display:flex; gap:4px;">
+               <div style="width:20px;height:20px;border-radius:50%;background:#0ea5e9;"></div>
+               <div style="width:20px;height:20px;border-radius:50%;background:#4f46e5;margin-left:-8px; border:2px solid white;"></div>
+             </div>
+          </div>
+          <div style="display:grid; grid-template-columns:repeat(7,1fr); gap:8px; margin-bottom:20px; transform:translateZ(15px); text-align:center; color:#0f1f0f; font-size:12px; font-weight:600;">
+            <span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span>
+            <span style="color:rgba(15,31,15,0.4)">28</span><span style="color:rgba(15,31,15,0.4)">29</span><span style="color:rgba(15,31,15,0.4)">30</span><span>1</span><span>2</span><span>3</span><span>4</span>
+            <span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span>
+            <span>12</span><span>13</span><span style="background:#0f2d1a; color:white; border-radius:50%; width:24px; height:24px; display:inline-flex; align-items:center; justify-content:center; margin:0 auto;">14</span><span>15</span><span>16</span><span>17</span><span>18</span>
+            <span>19</span><span>20</span><span>21</span><span>22</span><span>23</span><span>24</span><span>25</span>
+          </div>
+          <div style="background:rgba(255,255,255,0.9); border-radius:16px; padding:16px; transform:translateZ(25px); box-shadow:0 10px 30px rgba(0,0,0,0.08);">
+            <p style="color:#0f1f0f; font-weight:700; margin-bottom:4px; font-size:14px;">Meeting with DevelopersHub</p>
+            <p style="color:#2d4a2d; font-size:12px; margin-bottom:16px;">45 mins | Google Meet | Your timezone</p>
+            <button style="width:100%; background:#0f2d1a; color:white; border:none; padding:10px; border-radius:12px; font-weight:600; cursor:pointer; transition:0.2s;" onmouseover="this.style.background='#1a4a2a'; this.style.transform='translateY(-1px)'" onmouseout="this.style.background='#0f2d1a'; this.style.transform='none'">Confirm Booking</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES (dynamic) -->
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-header" data-aos="fade-up">
+        <div class="section-badge">What We Do</div>
+        <h2>Our Services</h2>
+        <p>We offer end-to-end development services tailored to your business needs.</p>
+      </div>
+      <div class="grid-3" id="services-grid">
+        <div class="skeleton loading-card"></div>
+        <div class="skeleton loading-card"></div>
+        <div class="skeleton loading-card"></div>
+      </div>
+      <div style="text-align:center;margin-top:2.5rem" data-aos="fade-up" data-aos-delay="200">
+        <a href="pages/services.html" class="btn btn-outline">View All Services</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PORTFOLIO (dynamic) -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header" data-aos="fade-up">
+        <div class="section-badge">Our Work</div>
+        <h2>Recent Projects</h2>
+        <p>A selection of our recent web development projects.</p>
+      </div>
+      <div class="grid-3" id="portfolio-grid">
+        <div class="skeleton loading-card"></div>
+        <div class="skeleton loading-card"></div>
+        <div class="skeleton loading-card"></div>
+      </div>
+      <div style="text-align:center;margin-top:2.5rem" data-aos="fade-up" data-aos-delay="200">
+        <a href="pages/portfolio.html" class="btn btn-outline">View All Projects</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- BLOG (dynamic) -->
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-header" data-aos="fade-up">
+        <div class="section-badge">Blog</div>
+        <h2>Latest Articles</h2>
+        <p>Insights, tutorials, and updates from our team.</p>
+      </div>
+      <div class="grid-3" id="blog-grid">
+        <div class="skeleton loading-card"></div>
+        <div class="skeleton loading-card"></div>
+        <div class="skeleton loading-card"></div>
+      </div>
+      <div style="text-align:center;margin-top:2.5rem" data-aos="fade-up" data-aos-delay="200">
+        <a href="pages/blog.html" class="btn btn-outline">View All Posts</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section" data-aos="fade-up">
+    <div class="container cta-banner" style="
+      background: rgba(255,255,255,0.18);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.35);
+      border-radius: 28px;
+      margin: 0 auto;
+      max-width: 1000px;
+      padding: 60px 40px;
+      text-align: center;
+    ">
+      <h2 style="color:white; font-weight:800; margin-bottom:1rem; font-size:2.5rem;">Ready to Start Your Project?</h2>
+      <p style="color:rgba(255,255,255,0.75); margin-bottom:2rem; font-size:1.1rem">Let's build something amazing together. Book a free consultation today.</p>
+      <a href="pages/booking.html" class="btn" style="
+        background:white; color:#0f2d1a; border-radius:50px; font-weight:700; padding:14px 32px; transition:0.2s cubic-bezier(0.4,0,0.2,1); display:inline-block; border:none;
+      " onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='none'">Schedule a Meeting</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <span class="logo">Developers<span style="color:rgba(255,255,255,0.6)">Hub</span></span>
+          <p>Full-stack development agency building modern web applications.</p>
+        </div>
+        <div class="footer-col" data-aos="fade-up" data-aos-delay="100">
+          <h4>Pages</h4>
+          <ul>
+            <li><a href="pages/about.html">About Us</a></li>
+            <li><a href="pages/services.html">Services</a></li>
+            <li><a href="pages/portfolio.html">Portfolio</a></li>
+          </ul>
+        </div>
+        <div class="footer-col" data-aos="fade-up" data-aos-delay="200">
+          <h4>More</h4>
+          <ul>
+            <li><a href="pages/blog.html">Blog</a></li>
+            <li><a href="pages/contact.html">Contact</a></li>
+            <li><a href="pages/booking.html">Book Meeting</a></li>
+          </ul>
+        </div>
+        <div class="footer-col" data-aos="fade-up" data-aos-delay="300">
+          <h4>Admin</h4>
+          <ul>
+            <li><a href="pages/admin/login.html">Admin Login</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2025 DevelopersHub. All rights reserved.</span>
+        <span>Built with Flask + PostgreSQL</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    // Navbar Scroll
+    window.addEventListener('scroll', () => {
+      document.querySelector('.navbar').classList.toggle('scrolled', window.scrollY > 20);
+    });
+
+    // Mobile menu toggle
+    document.querySelector('.hamburger').addEventListener('click', () => {
+      document.querySelector('.nav-links').classList.toggle('active');
+    });
+
+    // Hero Mouse Parallax
+    const heroCard = document.getElementById('hero-card');
+    document.addEventListener('mousemove', (e) => {
+      if (window.innerWidth < 768) return;
+      const x = (e.clientX / window.innerWidth - 0.5) * 14;
+      const y = (e.clientY / window.innerHeight - 0.5) * 10;
+      heroCard.style.animation = 'none';
+      heroCard.style.transform = `perspective(1000px) rotateY(${-14 + x}deg) rotateX(${6 - y}deg)`;
+    });
+    document.addEventListener('mouseleave', () => {
+      heroCard.style.animation = 'heroFloat 5s ease-in-out infinite';
+    });
+
+    async function loadHome() {
+      try {
+        // Services
+        const services = await apiGet('/services/');
+        const sg = document.getElementById('services-grid');
+        sg.innerHTML = services.slice(0, 3).map((s, index) => `
+          <div class="card service-card" data-aos="fade-up" data-aos-delay="${index*100}" data-tilt data-tilt-glare data-tilt-max-glare="0.4" data-tilt-scale="1.05" data-tilt-speed="400">
+            <div class="service-icon">${getIcon(s.icon)}</div>
+            <h3>${s.title}</h3>
+            <p>${s.description || 'Professional development service tailored to your needs.'}</p>
+          </div>
+        `).join('') || '<p style="color:var(--text-muted);grid-column:1/-1;text-align:center">No services yet. Add some from the admin panel.</p>';
+        VanillaTilt.init(document.querySelectorAll(".service-card"));
+      } catch(e) {}
+
+      try {
+        // Portfolio
+        const portfolio = await apiGet('/portfolio/');
+        const pg = document.getElementById('portfolio-grid');
+        pg.innerHTML = portfolio.slice(0, 3).map((p, index) => `
+          <div class="card portfolio-card" data-aos="fade-up" data-aos-delay="${index*100}" data-tilt data-tilt-glare data-tilt-max-glare="0.4" data-tilt-scale="1.05" data-tilt-speed="400">
+            <div class="portfolio-img"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#0f2d1a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg></div>
+            <div class="portfolio-info">
+              <h3>${p.title}</h3>
+              <p>${p.description || ''}</p>
+              <div class="tech-tags">${(p.tech_stack||'').split(',').map(t => `<span class="tag">${t.trim()}</span>`).join('')}</div>
+              ${p.project_url ? `<a href="${p.project_url}" target="_blank" class="btn btn-sm btn-outline" style="margin-top:0.5rem">View Project →</a>` : ''}
+            </div>
+          </div>
+        `).join('') || '<p style="color:var(--text-muted);grid-column:1/-1;text-align:center">No projects yet.</p>';
+        VanillaTilt.init(document.querySelectorAll(".portfolio-card"));
+      } catch(e) {}
+
+      try {
+        // Blog
+        const posts = await apiGet('/blog/');
+        const bg = document.getElementById('blog-grid');
+        bg.innerHTML = posts.slice(0, 3).map((p, index) => `
+          <div class="card blog-card" data-aos="fade-up" data-aos-delay="${index*100}" data-tilt data-tilt-glare data-tilt-max-glare="0.4" data-tilt-scale="1.05" data-tilt-speed="400">
+            <div class="blog-img"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#0f2d1a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg></div>
+            <div class="blog-info">
+              <div class="blog-meta"><span>📅 ${formatDate(p.created_at)}</span><span>✍️ ${p.author}</span></div>
+              <h3>${p.title}</h3>
+              <p>${p.excerpt || ''}</p>
+              <a href="pages/blog-post.html?id=${p.id}" class="btn btn-sm btn-outline" style="margin-top:0.75rem">Read More →</a>
+            </div>
+          </div>
+        `).join('') || '<p style="color:var(--text-muted);grid-column:1/-1;text-align:center">No posts yet.</p>';
+        VanillaTilt.init(document.querySelectorAll(".blog-card"));
+      } catch(e) {}
+    }
+
+    loadHome();
+    
+    // Init AOS
+    AOS.init({ duration: 650, once: true, offset: 80, easing: 'ease-out-cubic' });
+  </script>
+</body>
+</html>

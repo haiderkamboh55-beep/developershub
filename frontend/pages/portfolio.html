@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio - DevelopersHub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <div style="
+    position:fixed; inset:0; pointer-events:none; z-index:0;
+    background-image: repeating-linear-gradient(
+      0deg, transparent, transparent 60px,
+      rgba(255,255,255,0.04) 60px, rgba(255,255,255,0.04) 61px),
+    repeating-linear-gradient(
+      90deg, transparent, transparent 60px,
+      rgba(255,255,255,0.04) 60px, rgba(255,255,255,0.04) 61px);
+  "></div>
+
+  <nav class="navbar">
+    <div class="container nav-inner">
+      <a href="../index.html" class="logo">Developers<span>Hub</span></a>
+      <ul class="nav-links">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="portfolio.html" class="active">Portfolio</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="booking.html" class="nav-cta">Book a Meeting</a></li>
+      </ul>
+      <button class="hamburger"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <div class="page-header" data-aos="fade-up">
+    <div class="container">
+      <div class="section-badge">Case Studies</div>
+      <h1>Our Portfolio</h1>
+      <p>Select works from our past clients.</p>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container">
+      <div class="grid-3" id="portfolio-grid">
+        <div class="skeleton loading-card"></div>
+        <div class="skeleton loading-card"></div>
+        <div class="skeleton loading-card"></div>
+      </div>
+    </div>
+  </section>
+
+  <script src="../js/main.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    window.addEventListener('scroll', () => {
+      document.querySelector('.navbar').classList.toggle('scrolled', window.scrollY > 20);
+    });
+
+    async function loadPortfolio() {
+      try {
+        const portfolio = await apiGet('/portfolio/');
+        const pg = document.getElementById('portfolio-grid');
+        pg.innerHTML = portfolio.map((p, index) => `
+          <div class="card portfolio-card" data-aos="fade-up" data-aos-delay="${index*100}" data-tilt data-tilt-glare data-tilt-max-glare="0.4" data-tilt-scale="1.05" data-tilt-speed="400">
+            <div class="portfolio-img"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#0f2d1a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg></div>
+            <div class="portfolio-info">
+              <h3>${p.title}</h3>
+              <p>${p.description || ''}</p>
+              <div class="tech-tags">${(p.tech_stack||'').split(',').map(t => `<span class="tag">${t.trim()}</span>`).join('')}</div>
+              ${p.project_url ? `<a href="${p.project_url}" target="_blank" class="btn btn-sm btn-outline" style="margin-top:0.5rem">View Project →</a>` : ''}
+            </div>
+          </div>
+        `).join('') || '<p style="color:var(--text-muted);grid-column:1/-1;text-align:center">No projects found.</p>';
+        VanillaTilt.init(document.querySelectorAll(".portfolio-card"));
+      } catch(e) { console.error(e); }
+    }
+    loadPortfolio();
+    AOS.init({ duration: 650, once: true, offset: 80, easing: 'ease-out-cubic' });
+  </script>
+</body>
+</html>

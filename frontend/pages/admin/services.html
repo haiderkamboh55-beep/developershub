@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Services - Admin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/admin.css?v=1.2">
+</head>
+<body>
+  <div style="
+    position:fixed; inset:0; pointer-events:none; z-index:0;
+    background-image: repeating-linear-gradient(
+      0deg, transparent, transparent 60px,
+      rgba(255,255,255,0.04) 60px, rgba(255,255,255,0.04) 61px),
+    repeating-linear-gradient(
+      90deg, transparent, transparent 60px,
+      rgba(255,255,255,0.04) 60px, rgba(255,255,255,0.04) 61px);
+  "></div>
+
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-text" style="font-family:'Playfair Display'; font-style:italic;">Developers<span>Hub</span></div><small style="opacity:0.6; font-size:10px; text-transform:uppercase; letter-spacing:1px; margin-top:4px; display:block;">Admin Panel</small>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">Overview</div>
+      <a class="sidebar-link" href="dashboard.html"><span class="icon">📊</span> Dashboard</a>
+      <div class="nav-section">Content</div>
+      <a class="sidebar-link active" href="services.html"><span class="icon">⚙️</span> Services</a>
+      <a class="sidebar-link" href="portfolio.html"><span class="icon">🖥️</span> Portfolio</a>
+      <a class="sidebar-link" href="blog.html"><span class="icon">📝</span> Blog Posts</a>
+      <div class="nav-section">Clients</div>
+      <a class="sidebar-link" href="inquiries.html"><span class="icon">💬</span> Inquiries</a>
+      <a class="sidebar-link" href="bookings.html"><span class="icon">📅</span> Bookings</a>
+    </nav>
+    <div class="sidebar-footer">
+      <button class="logout-btn" onclick="logout()">🚪 Sign Out</button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <h1 data-aos="fade-right">Manage Services</h1>
+      <button class="btn btn-primary" onclick="openModal()" data-aos="fade-left">+ Create New Service</button>
+    </div>
+    <div class="content">
+      <div class="panel" data-aos="fade-up">
+        <table>
+          <thead><tr><th>ID</th><th>Icon</th><th>Service Title</th><th>Description</th><th>Actions</th></tr></thead>
+          <tbody id="services-tbody"><tr><td colspan="5" class="empty-state">Syncing services...</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <div class="modal-overlay" id="add-modal">
+    <div class="modal">
+      <h2 style="margin-bottom:1.5rem; font-family:'Playfair Display'; font-style:italic; border-bottom:1.5px solid #e8f2e8; padding-bottom:0.5rem;">Add New Service</h2>
+      <form id="add-form">
+        <div class="form-group"><label class="form-label">Title</label><input type="text" id="title" class="form-control" required placeholder="e.g. Web Development"></div>
+        <div class="form-group"><label class="form-label">Icon Identifier <small>(code, mobile, api, etc.)</small></label><input type="text" id="icon" class="form-control" required placeholder="code"></div>
+        <div class="form-group"><label class="form-label">Description</label><textarea id="description" class="form-control" style="min-height:100px" required placeholder="Describe what this service covers..."></textarea></div>
+        <div style="display:flex;gap:1rem;margin-top:2rem">
+          <button type="submit" class="btn btn-primary" style="flex:1">Save Service</button>
+          <button type="button" class="btn btn-outline" style="flex:1" onclick="closeModal()">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="../../js/main.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({ duration: 650, once: true });
+    if (!localStorage.getItem('token')) window.location.href = 'login.html';
+    function logout() { localStorage.clear(); window.location.href = 'login.html'; }
+
+    async function loadData() {
+      try {
+        const data = await apiGet('/services/');
+        document.getElementById('services-tbody').innerHTML = data.map(s => `
+          <tr>
+            <td>#${s.id}</td><td>${getIcon(s.icon)}</td><td><strong>${s.title}</strong></td>
+            <td style="color:#2d4a2d; font-size:0.9rem;">${s.description}</td>
+            <td><button class="btn btn-sm btn-danger" onclick="deleteService(${s.id})">Remove</button></td>
+          </tr>
+        `).join('') || '<tr><td colspan="5" class="empty-state">No services found. Add your first service above!</td></tr>';
+      } catch(e) { if(e.message.includes('401')) logout(); }
+    }
+
+    async function deleteService(id) {
+      if(!confirm('Are you sure you want to remove this service?')) return;
+      await apiAdmin('DELETE', `/services/${id}`);
+      loadData();
+    }
+
+    function openModal() { document.getElementById('add-modal').style.display = 'flex'; }
+    function closeModal() { document.getElementById('add-modal').style.display = 'none'; document.getElementById('add-form').reset(); }
+
+    document.getElementById('add-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      await apiAdmin('POST', '/services/', {
+        title: document.getElementById('title').value,
+        icon: document.getElementById('icon').value,
+        description: document.getElementById('description').value
+      });
+      closeModal(); loadData();
+    });
+
+    loadData();
+  </script>
+</body>
+</html>

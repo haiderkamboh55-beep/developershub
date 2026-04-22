@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book a Meeting - DevelopersHub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <div style="
+    position:fixed; inset:0; pointer-events:none; z-index:0;
+    background-image: repeating-linear-gradient(
+      0deg, transparent, transparent 60px,
+      rgba(255,255,255,0.04) 60px, rgba(255,255,255,0.04) 61px),
+    repeating-linear-gradient(
+      90deg, transparent, transparent 60px,
+      rgba(255,255,255,0.04) 60px, rgba(255,255,255,0.04) 61px);
+  "></div>
+
+  <nav class="navbar">
+    <div class="container nav-inner">
+      <a href="../index.html" class="logo">Developers<span>Hub</span></a>
+      <ul class="nav-links">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="portfolio.html">Portfolio</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="booking.html" class="nav-cta">Book a Meeting</a></li>
+      </ul>
+      <button class="hamburger"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <div class="page-header" data-aos="fade-up">
+    <div class="container">
+      <div class="section-badge">Booking Calendar</div>
+      <h1>Book a Meeting</h1>
+      <p>Schedule a free 30-minute consultation with our experts.</p>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container" style="max-width:600px" data-aos="zoom-in">
+      <div class="form-wrapper">
+        <form id="booking-form">
+          <div class="form-group">
+            <label class="form-label">Date</label>
+            <input type="date" id="date" class="form-control" required min="">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Available Time Slots</label>
+            <select id="time_slot" class="form-control" required disabled style="appearance:none;">
+              <option value="">Select a date first</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Full Name</label>
+            <input type="text" id="name" class="form-control" required placeholder="Your Name">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email Address</label>
+            <input type="email" id="email" class="form-control" required placeholder="name@example.com">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Purpose of Meeting</label>
+            <textarea id="purpose" class="form-control" placeholder="Briefly describe what you'd like to discuss..."></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%" id="submit-btn" disabled>Book Appointment</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <script src="../js/main.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    window.addEventListener('scroll', () => {
+      document.querySelector('.navbar').classList.toggle('scrolled', window.scrollY > 20);
+    });
+    AOS.init({ duration: 650, once: true, offset: 80, easing: 'ease-out-cubic' });
+
+    // Set min date to today
+    const dateInput = document.getElementById('date');
+    const today = new Date().toISOString().split('T')[0];
+    dateInput.min = today;
+
+    const timeSlotSelect = document.getElementById('time_slot');
+    const submitBtn = document.getElementById('submit-btn');
+
+    dateInput.addEventListener('change', async (e) => {
+      const selectedDate = e.target.value;
+      if (!selectedDate) return;
+
+      timeSlotSelect.disabled = true;
+      timeSlotSelect.innerHTML = '<option value="">Loading slots...</option>';
+      submitBtn.disabled = true;
+
+      try {
+        const slots = await apiGet(`/bookings/available?date=${selectedDate}`);
+        if(slots.length === 0) {
+          timeSlotSelect.innerHTML = '<option value="">No slots available on this date</option>';
+        } else {
+          timeSlotSelect.innerHTML = '<option value="">Select a time</option>' + 
+            slots.map(s => `<option value="${s}">${s}</option>`).join('');
+          timeSlotSelect.disabled = false;
+        }
+      } catch(err) {
+        showToast('Error loading time slots', true);
+      }
+    });
+
+    timeSlotSelect.addEventListener('change', (e) => {
+      submitBtn.disabled = !e.target.value;
+    });
+
+    document.getElementById('booking-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      submitBtn.innerText = 'Booking...';
+      submitBtn.disabled = true;
+
+      const payload = {
+        date: document.getElementById('date').value,
+        time_slot: document.getElementById('time_slot').value,
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        purpose: document.getElementById('purpose').value
+      };
+
+      try {
+        await apiPost('/bookings/', payload);
+        showToast('Booking confirmed! We will email you the details.');
+        e.target.reset();
+        timeSlotSelect.innerHTML = '<option value="">Select a date first</option>';
+        timeSlotSelect.disabled = true;
+      } catch (err) {
+        showToast(err.message, true);
+        submitBtn.disabled = false;
+      } finally {
+        submitBtn.innerText = 'Book Appointment';
+      }
+    });
+  </script>
+</body>
+</html>

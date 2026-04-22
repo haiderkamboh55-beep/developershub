@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog Post - DevelopersHub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+  <div style="
+    position:fixed; inset:0; pointer-events:none; z-index:0;
+    background-image: repeating-linear-gradient(
+      0deg, transparent, transparent 60px,
+      rgba(255,255,255,0.04) 60px, rgba(255,255,255,0.04) 61px),
+    repeating-linear-gradient(
+      90deg, transparent, transparent 60px,
+      rgba(255,255,255,0.04) 60px, rgba(255,255,255,0.04) 61px);
+  "></div>
+
+  <nav class="navbar">
+    <div class="container nav-inner">
+      <a href="../index.html" class="logo">Developers<span>Hub</span></a>
+      <ul class="nav-links">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="portfolio.html">Portfolio</a></li>
+        <li><a href="blog.html" class="active">Blog</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="booking.html" class="nav-cta">Book a Meeting</a></li>
+      </ul>
+      <button class="hamburger"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <div class="page-header" style="padding-bottom:20px; border-bottom: none" data-aos="fade-down">
+    <div class="container" style="max-width:800px;text-align:left">
+      <a href="blog.html" style="color:white;font-weight:600;margin-bottom:1rem;display:inline-block;opacity:0.8;">← Back to Blog</a>
+      <h1 id="post-title" style="font-size:3rem;margin-bottom:1rem;color:white;">Loading...</h1>
+      <div style="color:rgba(255,255,255,0.72);font-size:1rem" id="post-meta"></div>
+    </div>
+  </div>
+
+  <section class="section" style="padding-top:0" data-aos="fade-up" data-aos-delay="200">
+    <div class="container" style="max-width:800px">
+      <div id="post-content" style="font-size:1.1rem;color:white;line-height:1.8">
+        <div class="skeleton loading-card"></div>
+      </div>
+    </div>
+  </section>
+
+  <script src="../js/main.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    window.addEventListener('scroll', () => {
+      document.querySelector('.navbar').classList.toggle('scrolled', window.scrollY > 20);
+    });
+    AOS.init({ duration: 650, once: true, offset: 80, easing: 'ease-out-cubic' });
+
+    async function loadPost() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const id = urlParams.get('id');
+      if(!id) { window.location.href = 'blog.html'; return; }
+
+      try {
+        const post = await apiGet(`/blog/${id}`);
+        document.title = `${post.title} - DevelopersHub`;
+        document.getElementById('post-title').textContent = post.title;
+        document.getElementById('post-meta').innerHTML = `Published on ${formatDate(post.created_at)} by <strong>${post.author}</strong>`;
+        document.getElementById('post-content').innerHTML = marked.parse(post.content);
+      } catch(e) { 
+        document.getElementById('post-title').textContent = "Post not found";
+        document.getElementById('post-content').innerHTML = "<p>The post you are looking for does not exist.</p>";
+      }
+    }
+    loadPost();
+  </script>
+</body>
+</html>

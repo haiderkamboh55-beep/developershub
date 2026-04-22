@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Bookings - Admin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/admin.css?v=1.2">
+</head>
+<body>
+  <div style="
+    position:fixed; inset:0; pointer-events:none; z-index:0;
+    background-image: repeating-linear-gradient(
+      0deg, transparent, transparent 60px,
+      rgba(255,255,255,0.04) 60px, rgba(255,255,255,0.04) 61px),
+    repeating-linear-gradient(
+      90deg, transparent, transparent 60px,
+      rgba(255,255,255,0.04) 60px, rgba(255,255,255,0.04) 61px);
+  "></div>
+
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-text" style="font-family:'Playfair Display'; font-style:italic;">Developers<span>Hub</span></div><small style="opacity:0.6; font-size:10px; text-transform:uppercase; letter-spacing:1px; margin-top:4px; display:block;">Admin Panel</small>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">Overview</div>
+      <a class="sidebar-link" href="dashboard.html"><span class="icon">📊</span> Dashboard</a>
+      <div class="nav-section">Content</div>
+      <a class="sidebar-link" href="services.html"><span class="icon">⚙️</span> Services</a>
+      <a class="sidebar-link" href="portfolio.html"><span class="icon">🖥️</span> Portfolio</a>
+      <a class="sidebar-link" href="blog.html"><span class="icon">📝</span> Blog Posts</a>
+      <div class="nav-section">Clients</div>
+      <a class="sidebar-link" href="inquiries.html"><span class="icon">💬</span> Inquiries</a>
+      <a class="sidebar-link active" href="bookings.html"><span class="icon">📅</span> Bookings</a>
+    </nav>
+    <div class="sidebar-footer"><button class="logout-btn" onclick="logout()">🚪 Sign Out</button></div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <h1 data-aos="fade-right">Meeting Calendar</h1>
+    </div>
+    <div class="content">
+      <div class="panel" data-aos="fade-up">
+        <table>
+          <thead><tr><th>ID</th><th>Guest Details</th><th>Date & Time</th><th>Discussion Points</th><th>Stage</th><th>Update</th></tr></thead>
+          <tbody id="tbody"><tr><td colspan="6" class="empty-state">Syncing with calendar services...</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <script src="../../js/main.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({ duration: 650, once: true });
+    if (!localStorage.getItem('token')) window.location.href = 'login.html';
+    function logout() { localStorage.clear(); window.location.href = 'login.html'; }
+
+    function statusBadge(status) {
+      const map = { pending: 'badge-warning', confirmed: 'badge-success', cancelled: 'badge-danger' };
+      return `<span class="badge ${map[status] || 'badge-info'}">${status}</span>`;
+    }
+
+    async function loadData() {
+      try {
+        const data = await apiAdmin('GET', '/bookings/');
+        document.getElementById('tbody').innerHTML = data.map(i => `
+          <tr>
+            <td style="opacity:0.6;">#${i.id}</td>
+            <td>
+              <strong style="color:#0f1f0f;">${i.name}</strong><br>
+              <a href="mailto:${i.email}" style="font-size:12px; color:#14532d;">${i.email}</a>
+            </td>
+            <td>
+              <strong style="color:#0f2d1a;">${i.date}</strong><br>
+              <span style="font-size:12px; color:#2d4a2d; font-weight:600;">${i.time_slot}</span>
+            </td>
+            <td style="max-width:250px; font-size:0.9rem; color:#2d4a2d;">${i.purpose || '<span style="opacity:0.4;">No details provided</span>'}</td>
+            <td>${statusBadge(i.status)}</td>
+            <td>
+              <select onchange="updateStatus(${i.id}, this.value)" style="padding:0.5rem; border-radius:50px; border:1.5px solid #e8f2e8; background:rgba(255,255,255,0.7); font-size:12px; font-weight:700; cursor:pointer;">
+                <option value="pending" ${i.status==='pending'?'selected':''}>Pending</option>
+                <option value="confirmed" ${i.status==='confirmed'?'selected':''}>Confirmed</option>
+                <option value="cancelled" ${i.status==='cancelled'?'selected':''}>Cancelled</option>
+              </select>
+            </td>
+          </tr>
+        `).join('') || '<tr><td colspan="6" class="empty-state">No scheduled meetings. Time to promote!</td></tr>';
+      } catch(e) { if(e.message.includes('401')) logout(); }
+    }
+
+    async function updateStatus(id, newStatus) {
+      await apiAdmin('PUT', `/bookings/${id}/status`, { status: newStatus });
+      loadData();
+    }
+
+    loadData();
+  </script>
+</body>
+</html>

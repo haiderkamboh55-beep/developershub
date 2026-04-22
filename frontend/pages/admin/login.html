@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login - DevelopersHub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/admin.css?v=1.2">
+</head>
+<body class="login-body">
+  <div style="
+    position:fixed; inset:0; pointer-events:none; z-index:0;
+    background-image: repeating-linear-gradient(
+      0deg, transparent, transparent 60px,
+      rgba(255,255,255,0.04) 60px, rgba(255,255,255,0.04) 61px),
+    repeating-linear-gradient(
+      90deg, transparent, transparent 60px,
+      rgba(255,255,255,0.04) 60px, rgba(255,255,255,0.04) 61px);
+  "></div>
+
+  <div class="login-card" data-aos="zoom-in" data-aos-duration="800" style="position:relative; z-index:1;">
+    <div class="logo" style="font-family:'Playfair Display'; font-style:italic; color:#0f1f0f;">Developers<span style="color:#14532d;">Hub</span></div>
+    <p style="text-align:center; color:#2d4a2d; margin-bottom:2rem; font-weight:600; opacity:0.7;">Admin Control Center</p>
+    
+    <form id="login-form">
+      <div class="form-group">
+        <label class="form-label">Email Address</label>
+        <input type="email" id="email" class="form-control" required placeholder="admin@developershub.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input type="password" id="password" class="form-control" required placeholder="••••••••">
+      </div>
+      <button type="submit" class="btn btn-primary" style="width:100%; margin-top:1rem; padding:1rem;" id="login-btn">Sign In to Dashboard</button>
+    </form>
+    
+    <div style="text-align:center; margin-top:2rem;">
+      <a href="../../index.html" style="color:#14532d; font-size:0.9rem; font-weight:600; text-decoration:underline;">← Back to Website</a>
+    </div>
+  </div>
+
+  <script src="../../js/main.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({ once: true });
+
+    if(localStorage.getItem('token')) {
+      window.location.href = 'dashboard.html';
+    }
+
+    document.getElementById('login-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('login-btn');
+      btn.innerText = 'Signing in...';
+      btn.disabled = true;
+
+      const payload = {
+        email: document.getElementById('email').value,
+        password: document.getElementById('password').value
+      };
+
+      try {
+        const data = await apiPost('/auth/login', payload);
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('admin_user', JSON.stringify(data.user));
+        window.location.href = 'dashboard.html';
+      } catch (err) {
+        alert(err.message || 'Invalid credentials');
+        btn.innerText = 'Sign In to Dashboard';
+        btn.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>

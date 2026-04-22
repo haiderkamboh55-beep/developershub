@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog - DevelopersHub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <div style="
+    position:fixed; inset:0; pointer-events:none; z-index:0;
+    background-image: repeating-linear-gradient(
+      0deg, transparent, transparent 60px,
+      rgba(255,255,255,0.04) 60px, rgba(255,255,255,0.04) 61px),
+    repeating-linear-gradient(
+      90deg, transparent, transparent 60px,
+      rgba(255,255,255,0.04) 60px, rgba(255,255,255,0.04) 61px);
+  "></div>
+
+  <nav class="navbar">
+    <div class="container nav-inner">
+      <a href="../index.html" class="logo">Developers<span>Hub</span></a>
+      <ul class="nav-links">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="portfolio.html">Portfolio</a></li>
+        <li><a href="blog.html" class="active">Blog</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="booking.html" class="nav-cta">Book a Meeting</a></li>
+      </ul>
+      <button class="hamburger"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <div class="page-header" data-aos="fade-up">
+    <div class="container">
+      <div class="section-badge">Insights</div>
+      <h1>The Blog</h1>
+      <p>Updates, tutorials, and engineering insights.</p>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container">
+      <div class="grid-3" id="blog-grid">
+        <div class="skeleton loading-card"></div>
+        <div class="skeleton loading-card"></div>
+        <div class="skeleton loading-card"></div>
+      </div>
+    </div>
+  </section>
+
+  <script src="../js/main.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    window.addEventListener('scroll', () => {
+      document.querySelector('.navbar').classList.toggle('scrolled', window.scrollY > 20);
+    });
+
+    async function loadBlog() {
+      try {
+        const posts = await apiGet('/blog/');
+        const bg = document.getElementById('blog-grid');
+        bg.innerHTML = posts.map((p, index) => `
+          <div class="card blog-card" data-aos="fade-up" data-aos-delay="${index*100}" data-tilt data-tilt-glare data-tilt-max-glare="0.4" data-tilt-scale="1.05" data-tilt-speed="400">
+            <div class="blog-img"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#0f2d1a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg></div>
+            <div class="blog-info">
+              <div class="blog-meta"><span>📅 ${formatDate(p.created_at)}</span><span>✍️ ${p.author}</span></div>
+              <h3>${p.title}</h3>
+              <p>${p.excerpt || ''}</p>
+              <a href="blog-post.html?id=${p.id}" class="btn btn-sm btn-outline" style="margin-top:0.75rem">Read More →</a>
+            </div>
+          </div>
+        `).join('') || '<p style="color:var(--text-muted);grid-column:1/-1;text-align:center">No posts found.</p>';
+        VanillaTilt.init(document.querySelectorAll(".blog-card"));
+      } catch(e) { console.error(e); }
+    }
+    loadBlog();
+    AOS.init({ duration: 650, once: true, offset: 80, easing: 'ease-out-cubic' });
+  </script>
+</body>
+</html>
