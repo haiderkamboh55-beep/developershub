@@ -39,7 +39,7 @@
     <div class="container">
       <div class="section-badge">Booking Calendar</div>
       <h1>Book a Meeting</h1>
-      <p>Schedule a free 30-minute consultation with our experts.</p>
+      <p>Schedule a free 30-minute consultation with our team. No commitment required — just a conversation about your project.</p>
     </div>
   </div>
 
@@ -59,17 +59,17 @@
           </div>
           <div class="form-group">
             <label class="form-label">Full Name</label>
-            <input type="text" id="name" class="form-control" required placeholder="Your Name">
+            <input type="text" id="name" class="form-control" required placeholder="Your full name">
           </div>
           <div class="form-group">
             <label class="form-label">Email Address</label>
-            <input type="email" id="email" class="form-control" required placeholder="name@example.com">
+            <input type="email" id="email" class="form-control" required placeholder="your@email.com">
           </div>
           <div class="form-group">
             <label class="form-label">Purpose of Meeting</label>
             <textarea id="purpose" class="form-control" placeholder="Briefly describe what you'd like to discuss..."></textarea>
           </div>
-          <button type="submit" class="btn btn-primary" style="width:100%" id="submit-btn" disabled>Book Appointment</button>
+          <button type="submit" class="btn btn-primary" style="width:100%" id="submit-btn" disabled>Confirm Booking →</button>
         </form>
       </div>
     </div>
@@ -140,7 +140,7 @@
         showToast(err.message, true);
         submitBtn.disabled = false;
       } finally {
-        submitBtn.innerText = 'Book Appointment';
+        submitBtn.innerText = 'Confirm Booking →';
       }
     });
   </script>

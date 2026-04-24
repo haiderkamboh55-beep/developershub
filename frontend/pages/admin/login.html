@@ -21,7 +21,7 @@
 
   <div class="login-card" data-aos="zoom-in" data-aos-duration="800" style="position:relative; z-index:1;">
     <div class="logo" style="font-family:'Playfair Display'; font-style:italic; color:#0f1f0f;">Developers<span style="color:#14532d;">Hub</span></div>
-    <p style="text-align:center; color:#2d4a2d; margin-bottom:2rem; font-weight:600; opacity:0.7;">Admin Control Center</p>
+    <p style="text-align:center; color:#2d4a2d; margin-bottom:2rem; font-weight:600; opacity:0.7;">Admin Panel — DevelopersHub Corporation</p>
     
     <form id="login-form">
       <div class="form-group">
@@ -32,7 +32,7 @@
         <label class="form-label">Password</label>
         <input type="password" id="password" class="form-control" required placeholder="••••••••">
       </div>
-      <button type="submit" class="btn btn-primary" style="width:100%; margin-top:1rem; padding:1rem;" id="login-btn">Sign In to Dashboard</button>
+      <button type="submit" class="btn btn-primary" style="width:100%; margin-top:1rem; padding:1rem;" id="login-btn">Sign In to Dashboard →</button>
     </form>
     
     <div style="text-align:center; margin-top:2rem;">
@@ -67,7 +67,7 @@
         window.location.href = 'dashboard.html';
       } catch (err) {
         alert(err.message || 'Invalid credentials');
-        btn.innerText = 'Sign In to Dashboard';
+        btn.innerText = 'Sign In to Dashboard →';
         btn.disabled = false;
       }
     });
